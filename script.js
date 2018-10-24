@@ -70,13 +70,13 @@ function removeFile(slug, path, message, branch, token) {
 
 function gobstonesCoursePage(type, courseSlug) {
   return `<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset=utf-8>
+  <meta charset="utf-8">
   <title>Gobstones ${type.toUpperCase()}</title>
 </head>
 <body>
-  <iframe src="https://gobstones.github.io/gobstones-${type}?course=${courseSlug}&embed=true" style="border: 0; position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%">
+  <iframe src="https://gobstones.github.io/gobstones-${type}?course=${courseSlug}&embed=true" style="border: 0; position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%" />
 </body>
 </html>`;
 }
@@ -103,7 +103,7 @@ $(document).ready(() => {
       return removeFile(slug, "README.md", "Removing README", "master", token).then((result) => {
         return createBranch(slug, branch, token).then((result) => {
           return createFile(slug, "index.html", `Creating ${name}...`, gobstonesCoursePage(type, courseSlug), branch, token).then((result) => {
-            alert(`https://gobstones.github.io/${repository}/`);
+            alert(`https://gobstones.github.io/${repository}`);
           });
         });
       });
