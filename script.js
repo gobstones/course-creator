@@ -33,7 +33,7 @@ function createBranch(slug, branch, token) {
   });
 }
 
-function createFile(slug, path, message, content, branch = "master", token) {
+function createFile(slug, path, message, content, branch, token) {
   return $.ajax({
     type: "PUT",
     url: `https://api.github.com/repos/${slug}/contents/${path}`,
@@ -42,6 +42,29 @@ function createFile(slug, path, message, content, branch = "master", token) {
     headers: {
       "Authorization": `token ${token}`
     }
+  });
+}
+
+function getShaOf(slug, path, branch, token) {
+  return $.getJSON({
+    url: `https://api.github.com/repos/${slug}/contents/${path}?ref=${branch}`,
+    headers: {
+      "Authorization": `token ${token}`
+    }
+  }).then((res) => res.sha);
+}
+
+function removeFile(slug, path, message, branch, token) {
+  return getShaOf(slug, path, branch, token).then((sha) => {
+    return $.ajax({
+      type: "DELETE",
+      url: `https://api.github.com/repos/${slug}/contents/${path}`,
+      data: JSON.stringify({ message: message, sha: sha, branch: branch }),
+      dataType: "json",
+      headers: {
+        "Authorization": `token ${token}`
+      }
+    });
   });
 }
 
@@ -78,8 +101,10 @@ $(document).ready(() => {
 
     createRepo(organization, repository, token).then((result) => {
       return createBranch(slug, branch, token).then((result) => {
-        return createFile(slug, "index.html", `Creating ${name}...`, gobstonesCoursePage(type, courseSlug), branch, token).then((result) => {
-          alert(`https://gobstones.github.io/${repository}/`);
+        return removeFile(slug, "README.md", "Removing README", branch, token).then((result) => {
+          return createFile(slug, "index.html", `Creating ${name}...`, gobstonesCoursePage(type, courseSlug), branch, token).then((result) => {
+            alert(`https://gobstones.github.io/${repository}`);
+          });
         });
       });
     }).catch((e) => {
