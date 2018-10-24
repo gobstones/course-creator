@@ -78,9 +78,9 @@ $(document).ready(() => {
     $("button").attr("disabled", true);
 
     createRepo(organization, repository, token).then((result) => {
-      createBranch(slug, branch, token).then((result) => {
-        createFile(slug, "index.html", `Course ${name}...`, gobstonesCoursePage(type, courseSlug), branch, token).then((result) => {
-          alert("Done.");
+      return createBranch(slug, branch, token).then((result) => {
+        return createFile(slug, "index.html", `Creating ${name}...`, gobstonesCoursePage(type, courseSlug), branch, token).then((result) => {
+          alert(`https://gobstones.github.io/${repository}`);
         });
       });
     }).catch((e) => {
