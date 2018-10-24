@@ -46,17 +46,16 @@ function createFile(slug, path, message, content, branch = "master", token) {
 }
 
 function gobstonesCoursePage(type, courseSlug) {
-  return `
-    <!doctype html>
-    <html>
-    <head>
-      <meta charset=utf-8>
-      <title>Gobstones ${type.toUpperCase()}</title>
-    </head>
-    <body>
-      <iframe src="https://gobstones.github.io/gobstones-${type}?course=${courseSlug}&embed=true" style="border: 0; position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%">
-    </body>
-    </html>`;
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <title>Gobstones ${type.toUpperCase()}</title>
+</head>
+<body>
+  <iframe src="https://gobstones.github.io/gobstones-${type}?course=${courseSlug}&embed=true" style="border: 0; position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%">
+</body>
+</html>`;
 }
 
 $(document).ready(() => {
