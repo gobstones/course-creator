@@ -80,7 +80,7 @@ $(document).ready(() => {
     createRepo(organization, repository, token).then((result) => {
       return createBranch(slug, branch, token).then((result) => {
         return createFile(slug, "index.html", `Creating ${name}...`, gobstonesCoursePage(type, courseSlug), branch, token).then((result) => {
-          alert(`https://gobstones.github.io/${repository}`);
+          alert(`https://gobstones.github.io/${repository}/`);
         });
       });
     }).catch((e) => {
